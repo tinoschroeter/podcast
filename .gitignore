@@ -1,4 +1,7 @@
 **/node_modules
+*.jpg
+*.mp3
+**/data.sql
 *.log
 .vagrant
 .cache/
