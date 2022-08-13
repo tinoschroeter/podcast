@@ -3,14 +3,73 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <title>Podcast</title>
   </head>
   <body>
-    <h1>Podcast</h1>    
-    <form action="/" method="POST">
-      <input type="text" name="id">
-      <input type="submit" value="submit">
-    </form>
-    <p><%= message %></p>
-</body>
+    <style>
+.demo-layout-transparent {
+  background: lightblue center / cover;
+}
+.demo-layout-transparent .mdl-layout__header,
+.demo-layout-transparent .mdl-layout__drawer-button {
+  /* This background is dark, so we set text to white. Use 87% black instead if
+     your background is light. */
+  color: white;
+}
+    </style>
+
+    <div class="demo-layout-transparent mdl-layout mdl-js-layout">
+      <header class="mdl-layout__header mdl-layout__header--transparent">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">Podcast</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation -->
+          <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="">HOME</a>
+            <a class="mdl-navigation__link" href="">RSS</a>
+            <a class="mdl-navigation__link" href="">LOGOUT</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Podcast</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="">HOME</a>
+          <a class="mdl-navigation__link" href="">RSS</a>
+          <a class="mdl-navigation__link" href="">LOGOUT</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content" style="padding: 40px;">
+        <form action="/" method="POST">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="id">
+            <label class="mdl-textfield__label" for="id">YouTube ID...</label>
+          </div>
+          <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Submit
+          </button>
+        </form>
+        <p><%= message %></p>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% result.map((item) => { %>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"><%= item.title %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </body>
 </html>
