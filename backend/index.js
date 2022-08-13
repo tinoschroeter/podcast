@@ -1,4 +1,5 @@
 const downloader = require("./libs/downloder.js");
+const getData = require("./libs/getData.js");
 const { setupDatabase } = require("./libs/utils.js");
 
 const Database = require("better-sqlite3");
@@ -18,8 +19,7 @@ app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 
-
-app.get("/", (req, res) => res.render("index", { message: ""}));
+app.get("/", getData(db));
 app.post("/", downloader(db));
 
 app.listen(port, () => {
