@@ -6,7 +6,6 @@ const tableName = "podcast";
 const folder = process.env.FOLDER || "./video/";
 
 const fileExist = (youtubeID, db) => {
-  console.log("fileExist id: ", youtubeID)
   const result = db
     .prepare(`SELECT * FROM ${tableName} WHERE youtubeID=?`)
     .get(youtubeID);
@@ -46,7 +45,7 @@ const downlod = (youtubeID, db) => {
       );
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
