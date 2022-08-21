@@ -2,6 +2,8 @@ const { fileExist, downlod } = require("./utils.js");
 
 const downloader = (db) => {
   return (req, res) => {
+    if (!req.session.user) return res.redirect("/login");
+  
     const id = req.body.id;
 
     const result = db.prepare("select * from podcast").all();
