@@ -1,0 +1,6 @@
+namespace: podcast
+bases:
+  - ../base
+  - config.yaml
+  - pvc.yaml
+  - ingress.yaml

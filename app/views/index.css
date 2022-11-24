@@ -1,0 +1,198 @@
+@font-face {
+  font-family: IBM;
+  src: url(/fonts/IBMPlexMono-Regular.woff2) format("woff2"),
+    url(/fonts/IBMPlexMono-Regular.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: IBM;
+  src: url(/fonts/IBMPlexMono-Italic.woff2) format("woff2"),
+    url(/fonts/IBMPlexMono-Italic.woff) format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: IBM;
+  src: url(/fonts/IBMPlexMono-ExtraLight.woff2) format("woff2"),
+    url(/fonts/IBMPlexMono-ExtraLight.woff) format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: IBM;
+  src: url(/fonts/IBMPlexMono-ExtraLightItalic.woff2) format("woff2"),
+    url(/fonts/IBMPlexMono-ExtraLightItalic.woff) format("woff");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+body {
+  --color-black: #191919;
+  --color-white: #e1e1e1;
+  --color-grey: #a9a9a9;
+  --color-green: #13f270;
+  --color-red: #fc2c3a;
+  --color-purple: #e802f9;
+  --color-yellow: #c1de04;
+  --color-blue: #03bfee;
+  --line: 3ch;
+  --font: "IBM", monospace;
+  --font-scale: 0.4vw;
+}
+body.invert {
+  --color-black: #dcdcdc;
+  --color-white: #191919;
+  --color-grey: #515151;
+  --color-green: #176236;
+  --color-red: #840e2b;
+  --color-purple: #6e0172;
+  --color-yellow: #e37e02;
+  --color-blue: #0856af;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--color-white);
+  background: var(--color-black);
+  font-family: var(--font);
+  font-size: calc(1rem + var(--font-scale));
+  line-height: var(--line);
+}
+header,
+main,
+footer {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 24px;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+.text-smaller {
+  font-size: smaller;
+}
+.link-blue,
+.link-purple,
+.link-green,
+.link-grey,
+.link-white,
+.link-red {
+  cursor: pointer;
+}
+.link-red {
+  color: var(--color-red);
+}
+.link-red:hover {
+  color: var(--color-black);
+  background: var(--color-red);
+}
+.link-white {
+  color: var(--color-white);
+}
+.link-white:hover {
+  color: var(--color-black);
+  background: var(--color-white);
+}
+.link-grey {
+  color: var(--color-grey);
+}
+.link-grey:hover {
+  color: var(--color-black);
+  background: var(--color-grey);
+}
+.link-green {
+  color: var(--color-green);
+}
+.link-green:hover {
+  color: var(--color-black);
+  background: var(--color-green);
+}
+.link-blue {
+  color: var(--color-blue);
+}
+.link-blue:hover {
+  color: var(--color-black);
+  background: var(--color-blue);
+}
+.link-purple {
+  color: var(--color-purple);
+}
+.link-purple:hover {
+  color: var(--color-black);
+  background: var(--color-purple);
+}
+.text-white {
+  color: var(--color-white);
+}
+.text-grey {
+  color: var(--color-grey);
+}
+.text-green {
+  color: var(--color-green);
+}
+.text-red {
+  color: var(--color-red);
+}
+.text-purple {
+  color: var(--color-purple);
+}
+.text-yellow {
+  color: var(--color-yellow);
+}
+.text-blue {
+  color: var(--color-blue);
+}
+h1,
+h2 {
+  color: var(--color-blue);
+  font-size: calc(1.6rem + var(--font-scale));
+  font-weight: 200;
+  line-height: var(--line);
+  margin: 0;
+}
+.flat-list > ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.point-list > ul {
+  list-style: "- ";
+  padding-left: 1.2em;
+}
+#page-logo:where(.astro-7BAVIJ3R) {
+  font-style: italic;
+  color: var(--color-green);
+}
+nav:where(.astro-7BAVIJ3R) > ul:where(.astro-7BAVIJ3R) {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+footer:where(.astro-FDQYPIKJ) {
+  font-size: calc(0.75rem + var(--font-scale));
+  margin-bottom: 32px;
+}
+footer:where(.astro-FDQYPIKJ) > ul:where(.astro-FDQYPIKJ) {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

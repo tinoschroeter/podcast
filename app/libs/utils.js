@@ -14,6 +14,7 @@ const fileExist = (youtubeID, db) => {
 };
 
 const downlod = (youtubeID, db) => {
+  console.log(folder);
   const uuidV4 = uuid.v4();
   youtubeDlWrap
     .execPromise([

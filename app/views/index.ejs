@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Podcast</title>
+  </head>
+  <body>
+    <audio id="audio">
+      <source id="audioSource" src="<%= result[result.length -1].file + ".mp3" %>"></source>
+    </audio>
+
+    <code>
+      <p>const podcastPlayer = (controls) => {</p>
+      <p>
+        const [ 
+        <span>[prev]</span>, 
+        <span onclick="rew30()">[-30]</span>,
+        <span onclick="playAudio()">[playAudio]</span>,
+        <span onclick="pauseAudio()">[pauseAudio]</span>, 
+        <span onclick="ffw30()">[+30]</span>,
+        <span>[next]</span> ] = controls;
+      </p>
+
+      <p>const files = [</p>
+      <ul style="list-style: none" id="list">
+      <% result.reverse().map((item) => { %>
+        <li><a href="#" data-value="<%= item.file + ".mp3" %>"> <%= item.title %>,</a></li>
+        <% }) %>
+      </ul>
+      <p>]</p>
+      <p>};</p>
+    </code>
+
+    <script>
+      list.onclick = function(e) {
+        e.preventDefault();
+        const elm = e.target;
+        const audio = document.getElementById('audio');
+
+        const source = document.getElementById('audioSource');
+        source.src = elm.getAttribute('data-value');
+
+              console.log(source)
+        audio.load(); //call this to just preload the audio without playing
+        audio.play(); //call this to play the song right away
+};
+      // duration	Returns the length of an audio(in seconds)
+      // currentTime	Sets or returns the current playback position in an audio (in seconds)
+      const audio = document.getElementById("audio");
+      // const rew30 = () => audio.curentTime = audio.curentTime - 30;
+      // const ffw30 = () => audio.curentTime = audio.currentTime + 30;
+      const playAudio = () => audio.play();
+      const pauseAudio = () => audio.pause();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+namespace: podcast
+resources:
+  - service.yml
+  - app.yaml
