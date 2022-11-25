@@ -8,7 +8,6 @@
 @font-face {
   font-family: IBM;
   src: url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap') format("woff2"),
-    url(/fonts/IBMPlexMono-Regular.woff) format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -20,25 +19,25 @@ body {
   margin: 0;
   min-height: 100vh;
   color:  #e1e1e1;
-  background: #191919;
+  background: #1b1b25;
   font-family: "IBM", monospace;
-  font-size: calc(1rem + 0.4vw);
+  font-size: calc(0.2rem + 1.6vw);
   line-height: 2ch;
 }
 main {
   width: 90%;
   max-width: 1260px;
   margin: 0 auto;
-  padding: 42px;
+  padding: 10px;
 }
 ul {
   list-style: none;
-  padding: 5px 5px 5px 100px;;
+  padding: 5px 5px 5px 30px;
   margin: 0;
 }
 .keyword {
- color:#e66170; 
- font-weight:bold;
+  color:#e66170; 
+  font-weight:bold;
 }
 .function {
   font-weight:bold;
@@ -58,39 +57,47 @@ ul {
     </audio>
 
     <main>
-      <span class="keyword">const</span> <span class="function">podcastPlayer</span> <span class="operator">=</span> <span class="punctuation">(</span><span class="parameter">controls</span><span class="punctuation">)</span> <span class="operator">=&gt;</span> <span class="keyword">{</span></br></br>
+      <span class="keyword">const</span> <span class="function">podcastPlayer</span> <span class="operator">=</span> <span class="punctuation">(</span><span class="parameter">controls</span><span class="punctuation">,</span> </span><span class="parameter" id="control">pause</span><span class="punctuation">)</span> <span class="operator">=&gt;</span> <span class="keyword">{</span></br>
 
-      <span class="keyword">const</span> <span class="punctuation">[</span> <span>prev</span><span class="punctuation">,</span> <span onclick="playAudio()">playAudio</span>, <span onclick="pauseAudio()">pauseAudio</span><span class="punctuation">,</span> <span>next</span> <span class="punctuation">]</span> <span class="operator">=</span> controls<span class="keyword">;</span></br>
-      <span class="keyword">const</span> files<span class="punctuation"> = [</span>
-      <ul style="list-style: none" id="list">
-        <% result.reverse().map((item) => { %>
-        <li><a class="string" href="#" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
-        <% }) %>
-      </ul>
-      <span class="punctuation">&nbsp;&nbsp;]</span></br>
-      <span class="keyword">};</span>
+    <span class="keyword">const</span> <span class="punctuation">[</span> <span>prev</span><span class="punctuation">,</span> <span onclick="playAudio()">playAudio</span>, <span onclick="pauseAudio()">pauseAudio</span><span class="punctuation">,</span> <span>next</span> <span class="punctuation">]</span> <span class="operator">=</span> controls<span class="keyword">;</span></br></br>
+    <span class="keyword">const</span> files<span class="punctuation"> = [</span>
+    <ul style="list-style: none" id="list">
+      <% result.reverse().map((item) => { %>
+      <li><a class="string" href="#" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
+      <% }) %>
+    </ul>
+    <span class="punctuation">&nbsp;&nbsp;]</span></br>
+
+    <span class="keyword">};</span>
     </main>
 
     <script>
-      list.onclick = function(e) {
-              e.preventDefault();
-              const elm = e.target;
-              const audio = document.getElementById('audio');
+      const control = document.getElementById("control");
+            list.onclick = function(e) {
+                    e.preventDefault();
+                    const elm = e.target;
+                    const audio = document.getElementById("audio");
 
-              const source = document.getElementById('audioSource');
-              source.src = elm.getAttribute('data-value');
+                    const source = document.getElementById("audioSource");
+                    source.src = elm.getAttribute("data-value");
 
-              console.log(source)
-              audio.load(); //call this to just preload the audio without playing
-              audio.play(); //call this to play the song right away
-            };
+                    console.log(source)
+                    audio.load(); //call this to just preload the audio without playing
+                    audio.play(); //call this to play the song right away
+                    control.innerText = "play"
+                  };
             // duration	Returns the length of an audio(in seconds)
             // currentTime	Sets or returns the current playback position in an audio (in seconds)
             const audio = document.getElementById("audio");
-            // const rew30 = () => audio.curentTime = audio.curentTime - 30;
-            // const ffw30 = () => audio.curentTime = audio.currentTime + 30;
-            const playAudio = () => audio.play();
-            const pauseAudio = () => audio.pause();
+
+            const playAudio = () => {
+                    control.innerText = "play"
+                    audio.play();
+                  }
+            const pauseAudio = () => {
+                    control.innerText = "pause"
+                    audio.pause();
+                  }
 
     </script>
   </body>
