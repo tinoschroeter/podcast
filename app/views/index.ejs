@@ -4,54 +4,94 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Podcast</title>
+    <style>
+@font-face {
+  font-family: IBM;
+  src: url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap') format("woff2"),
+    url(/fonts/IBMPlexMono-Regular.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  color:  #e1e1e1;
+  background: #191919;
+  font-family: "IBM", monospace;
+  font-size: calc(1rem + 0.4vw);
+  line-height: 2ch;
+}
+main {
+  width: 90%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 42px;
+}
+ul {
+  list-style: none;
+  padding: 5px 5px 5px 100px;;
+  margin: 0;
+}
+.keyword {
+ color:#e66170; 
+ font-weight:bold;
+}
+.function {
+  font-weight:bold;
+}
+.operator,
+.punctuation {
+  color:#d2cd86;
+}
+.string {
+  color:#00c4c4;
+}
+    </style>
   </head>
   <body>
     <audio id="audio">
       <source id="audioSource" src="<%= result[result.length -1].file + ".mp3" %>"></source>
     </audio>
 
-    <code>
-      <p>const podcastPlayer = (controls) => {</p>
-      <p>
-        const [ 
-        <span>[prev]</span>, 
-        <span onclick="rew30()">[-30]</span>,
-        <span onclick="playAudio()">[playAudio]</span>,
-        <span onclick="pauseAudio()">[pauseAudio]</span>, 
-        <span onclick="ffw30()">[+30]</span>,
-        <span>[next]</span> ] = controls;
-      </p>
+    <main>
+      <span class="keyword">const</span> <span class="function">podcastPlayer</span> <span class="operator">=</span> <span class="punctuation">(</span><span class="parameter">controls</span><span class="punctuation">)</span> <span class="operator">=&gt;</span> <span class="keyword">{</span></br></br>
 
-      <p>const files = [</p>
+      <span class="keyword">const</span> <span class="punctuation">[</span> <span>prev</span><span class="punctuation">,</span> <span onclick="playAudio()">playAudio</span>, <span onclick="pauseAudio()">pauseAudio</span><span class="punctuation">,</span> <span>next</span> <span class="punctuation">]</span> <span class="operator">=</span> controls<span class="keyword">;</span></br>
+      <span class="keyword">const</span> files<span class="punctuation"> = [</span>
       <ul style="list-style: none" id="list">
-      <% result.reverse().map((item) => { %>
-        <li><a href="#" data-value="<%= item.file + ".mp3" %>"> <%= item.title %>,</a></li>
+        <% result.reverse().map((item) => { %>
+        <li><a class="string" href="#" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
         <% }) %>
       </ul>
-      <p>]</p>
-      <p>};</p>
-    </code>
+      <span class="punctuation">&nbsp;&nbsp;]</span></br>
+      <span class="keyword">};</span>
+    </main>
 
     <script>
       list.onclick = function(e) {
-        e.preventDefault();
-        const elm = e.target;
-        const audio = document.getElementById('audio');
+              e.preventDefault();
+              const elm = e.target;
+              const audio = document.getElementById('audio');
 
-        const source = document.getElementById('audioSource');
-        source.src = elm.getAttribute('data-value');
+              const source = document.getElementById('audioSource');
+              source.src = elm.getAttribute('data-value');
 
               console.log(source)
-        audio.load(); //call this to just preload the audio without playing
-        audio.play(); //call this to play the song right away
-};
-      // duration	Returns the length of an audio(in seconds)
-      // currentTime	Sets or returns the current playback position in an audio (in seconds)
-      const audio = document.getElementById("audio");
-      // const rew30 = () => audio.curentTime = audio.curentTime - 30;
-      // const ffw30 = () => audio.curentTime = audio.currentTime + 30;
-      const playAudio = () => audio.play();
-      const pauseAudio = () => audio.pause();
+              audio.load(); //call this to just preload the audio without playing
+              audio.play(); //call this to play the song right away
+            };
+            // duration	Returns the length of an audio(in seconds)
+            // currentTime	Sets or returns the current playback position in an audio (in seconds)
+            const audio = document.getElementById("audio");
+            // const rew30 = () => audio.curentTime = audio.curentTime - 30;
+            // const ffw30 = () => audio.curentTime = audio.currentTime + 30;
+            const playAudio = () => audio.play();
+            const pauseAudio = () => audio.pause();
+
     </script>
   </body>
 </html>
