@@ -8,3 +8,8 @@
 * [ ] update design
 * [ ] progress for upload files
 * [ ] import password as secret
+
+
+![podcast](podcast.gif)
+
+[Gif was created with VHS](https://github.com/charmbracelet/vhs#vhs)
