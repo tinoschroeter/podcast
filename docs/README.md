@@ -9,6 +9,7 @@
 * [ ] progress for upload files
 * [ ] import password as secret
 
+![podcast](podcast.png)
 
 ![podcast](podcast.gif)
 
