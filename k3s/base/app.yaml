@@ -33,11 +33,11 @@ spec:
                 key: FOLDER
         resources:
           requests:
-            memory: "150Mi"
-            cpu: "800m"
+            memory: "120Mi"
+            cpu: "300m"
           limits:
-            memory: "264Mi"
-            cpu: "1000m"
+            memory: "200Mi"
+            cpu: "500m"
         readinessProbe:
           httpGet:
             path: /
