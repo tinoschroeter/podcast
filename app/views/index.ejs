@@ -50,6 +50,7 @@ ul {
 }
 .string {
   color:#00c4c4;
+  font-size: calc(0.2rem + 1.4vw);
 }
     </style>
   </head>
@@ -61,21 +62,30 @@ ul {
     <main>
       </span><span class="keyword">const</span> <span class="function">podcastPlayer</span> <span class="operator">=</span> <span class="punctuation">(</span><span class="parameter">controls</span><span class="punctuation">,</span> </span><span class="parameter" id="control">pause</span><span class="punctuation">)</span> <span class="operator">=&gt;</span> <span class="keyword">{</span></br>
 
-    <span class="keyword">const</span> <span class="punctuation">[</span><span onclick="playAudio()">playAudio</span>, <span onclick="pauseAudio()">pauseAudio</span><span class="punctuation">]</span> <span class="operator">=</span> controls<span class="keyword">;</span></br></br>
-    <span class="keyword">const</span> files<span class="punctuation"> = [</span>
-    <ul style="list-style: none" id="list">
-      <% result.reverse().map((item) => { %>
-      <li><a class="string" href="#" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
-      <% }) %>
-    </ul>
-    <span class="punctuation">&nbsp;&nbsp;];</span></br></br>
-    <span class="keyword">const</span> help<span class="punctuation"> = "</span><span class="string">curl https://podcast.tino.sh/upload<span<span class="punctuation">"<span class="keyword">;</span></span></br>
-        <span class="keyword">const</span> gitHub<span class="punctuation"> = "</span><a class="string" href="https://github.com/tinoschroeter/podcast">https://github.com/tinoschroeter/podcast</a><span class="punctuation">"<span class="keyword">;</span></span></br>
-            <span class="keyword">};</span>
+      <span class="keyword">const</span> <span class="punctuation">[</span><span onclick="playAudio()">playAudio</span>, <span onclick="pauseAudio()">pauseAudio</span><span class="punctuation">]</span> <span class="operator">=</span> controls<span class="keyword">;</span></br></br>
+      <span class="keyword">const</span> files<span class="punctuation"> = [</span>
+      <ul style="list-style: none" id="list">
+        <% result.reverse().map((item) => { %>
+        <li><a class="string" href="#" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
+        <% }) %>
+      </ul>
+      <span class="punctuation">&nbsp;&nbsp;];</span></br></br>
+      <span class="keyword">const</span> help<span class="punctuation"> = "</span><span class="string">curl https://podcast.tino.sh/upload<span<span class="punctuation">"<span class="keyword">;</span></span></br>
+          <span class="keyword">const</span> gitHub<span class="punctuation"> = "</span><a class="string" href="https://github.com/tinoschroeter/podcast">https://github.com/tinoschroeter/podcast</a><span class="punctuation">"<span class="keyword">;</span></span></br>
+          <span class="keyword">const</span> downloading<span class="punctuation"> = </span><span class="string" id="download">0</span><span class="keyword">;</span></br>
+          <span class="keyword">};</span>
     </main>
 
     <script>
-      const control = document.getElementById("control");
+      const download = document.getElementById("download");
+
+            setInterval(() => {
+                    fetch("/count")
+                      .then(res => res.json())
+                      .then(res => download.innerText = res.count);
+                  }, 1000);
+
+            const control = document.getElementById("control");
             list.onclick = function(e) {
                     e.preventDefault();
                     const elm = e.target;
@@ -84,7 +94,6 @@ ul {
                     const source = document.getElementById("audioSource");
                     source.src = elm.getAttribute("data-value");
 
-                    console.log(source)
                     audio.load(); //call this to just preload the audio without playing
                     audio.play(); //call this to play the song right away
                     control.innerText = "play"
@@ -101,7 +110,6 @@ ul {
                     control.innerText = "pause"
                     audio.pause();
                   }
-
     </script>
   </body>
 </html>

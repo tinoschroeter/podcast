@@ -14,7 +14,7 @@ const fileExist = (youtubeID, db) => {
 };
 
 const downlod = (youtubeID, db) => {
-  console.log(folder);
+  db.prepare("INSERT INTO download VALUES(?)").run(youtubeID);
   const uuidV4 = uuid.v4();
   youtubeDlWrap
     .execPromise([
@@ -33,6 +33,7 @@ const downlod = (youtubeID, db) => {
     .then((out) => {
       const result = JSON.parse(out);
       console.log("write data...");
+      db.prepare("DELETE FROM download WHERE youtubeID = ?").run(youtubeID);
       db.prepare(`INSERT INTO ${tableName} VALUES(?,?,?,?,?,?,?,?,?)`).run(
         result.title,
         youtubeID,
@@ -50,12 +51,22 @@ const downlod = (youtubeID, db) => {
     });
 };
 
+const count = (db) => {
+  return (req, res) => {
+    const result = db.prepare("select * from download").all();
+
+    res.json({ count: result.length });
+  };
+};
+
 const setupDatabase = (db) => {
   const fields =
     "(title text NOT NULL UNIQUE, youtubeID NOT NULL, thumbnail text, filesize text, channel text, tags text, categories text, description, file text)";
   const query = `CREATE TABLE IF NOT EXISTS  ${tableName} ${fields}`;
+  const donload = "CREATE TABLE IF NOT EXISTS download (youtubeId NOT NULL)";
 
   db.prepare(query).run();
+  db.prepare(donload).run();
 };
 
-module.exports = { fileExist, downlod, setupDatabase };
+module.exports = { fileExist, downlod, setupDatabase, count };

@@ -3,14 +3,11 @@ const deleteItem = require("./libs/deleteItem.js");
 const getData = require("./libs/getData.js");
 const help = require("./libs/help.js");
 const list = require("./libs/list.js");
-const { setupDatabase } = require("./libs/utils.js");
+const { setupDatabase, count } = require("./libs/utils.js");
 
 const Database = require("better-sqlite3");
 const dbFile = process.env.DBFILE || "./data.sql";
 const folder = process.env.FOLDER || "./video/";
-
-console.log({ dbFile });
-console.log({ folder });
 
 const db = new Database(dbFile);
 
@@ -31,8 +28,10 @@ app.use(express.static(folder));
 app.get("/", getData(db));
 app.get("/upload", help);
 app.get("/upload/list", list(db));
+app.put("/upload", (req, res) => res.send("not implemented yet!"));
 app.post("/upload", downloader(db));
 app.delete("/upload", deleteItem(db));
+app.get("/count", count(db));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
