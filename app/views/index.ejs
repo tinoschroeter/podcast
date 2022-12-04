@@ -63,6 +63,8 @@ ul {
       </span><span class="keyword">const</span> <span class="function">podcastPlayer</span> <span class="operator">=</span> <span class="punctuation">(</span><span class="parameter">controls</span><span class="punctuation">,</span> </span><span class="parameter" id="control">pause</span><span class="punctuation">)</span> <span class="operator">=&gt;</span> <span class="keyword">{</span></br>
 
       <span class="keyword">const</span> <span class="punctuation">[</span><span class="string" onclick="playAudio()">playAudio</span>, <span class="string" onclick="pauseAudio()">pauseAudio</span><span class="punctuation">]</span> <span class="operator">=</span> controls<span class="keyword">;</span></br></br>
+
+      <span class="keyword">const</span> time<span class="punctuation"> = "</span><span id="time"></span><span class="punctuation">"</span></br>
       <span class="keyword">const</span> files<span class="punctuation"> = [</span>
       <ul style="list-style: none" id="list">
         <% result.reverse().map((item) => { %>
@@ -78,33 +80,51 @@ ul {
 
     <script>
       const download = document.getElementById("download");
+      const audio = document.getElementById("audio");
+      const time = document.getElementById("time");
+      const source = document.getElementById("audioSource");
+
+      const data = localStorage.getItem('playStatus');
+      const playStatus = data !== null ? JSON.parse(data) : { };
+
+      const setTime = () => {
+            if(playStatus[source.getAttribute('src')]) {
+                const minutes = playStatus[source.getAttribute('src')];
+                audio.currentTime = minutes;
+                }
+            }
+            setTime(); 
 
             setInterval(() => {
                     fetch("/count")
                       .then(res => res.json())
                       .then(res => download.innerText = res.count);
+
+                     const minute = Math.floor(audio.currentTime / 60);
+                     const second = Math.round(audio.currentTime % 60);
+
+                     const addZero = val => val < 10 ? `0${val}` : val;
+                     time.innerText = `${addZero(minute)}:${addZero(second)}`;
+
+                     playStatus[source.getAttribute('src')] = audio.currentTime;
+                     localStorage.setItem('playStatus', JSON.stringify(playStatus));
                   }, 1000);
 
             const control = document.getElementById("control");
-            list.onclick = function(e) {
+            list.onclick = (e) => {
                     e.preventDefault();
                     const elm = e.target;
-                    const audio = document.getElementById("audio");
-
-                    const source = document.getElementById("audioSource");
                     source.src = elm.getAttribute("data-value");
 
-                    audio.load(); //call this to just preload the audio without playing
-                    audio.play(); //call this to play the song right away
+                    audio.play();
                     control.innerText = "play"
+                    setTime();
                   };
-            // duration	Returns the length of an audio(in seconds)
-            // currentTime	Sets or returns the current playback position in an audio (in seconds)
-            const audio = document.getElementById("audio");
 
             const playAudio = () => {
                     control.innerText = "play"
                     audio.play();
+                    setTime();
                   }
             const pauseAudio = () => {
                     control.innerText = "pause"
