@@ -27,7 +27,7 @@ body {
   line-height: 2ch;
 }
 main {
-  width: 90%;
+  width: 100%;
   max-width: 1260px;
   margin: 0 auto;
   padding: 10px;
@@ -64,11 +64,12 @@ ul {
 
       <span class="keyword">const</span> <span class="punctuation">[</span><span class="string" onclick="playAudio()">playAudio</span>, <span class="string" onclick="pauseAudio()">pauseAudio</span>, <span class="string" onclick="reset()">reset</span><span class="punctuation">]</span> <span class="operator">=</span> controls<span class="keyword">;</span></br></br>
 
-      <span class="keyword">const</span> time<span class="punctuation"> = "</span><span id="time"></span><span class="punctuation">"</span></br>
+      <span class="keyword">const</span> time<span class="punctuation"> = "</span><span id="time"></span><span class="punctuation">"</span><span class="keyword">;</span></br>
+      <span class="keyword">const</span> playing<span class="punctuation"> = "</span><span id="playing"></span><span class="punctuation">"</span><span class="keyword">;</span></br></br>
       <span class="keyword">const</span> files<span class="punctuation"> = [</span>
       <ul style="list-style: none" id="list">
         <% result.reverse().map((item) => { %>
-        <li><a class="string" href="#" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
+        <li><a class="string" href="#" id="<%= item.file + ".mp3" %>" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
         <% }) %>
       </ul>
       <span class="punctuation">&nbsp;&nbsp;];</span></br></br>
@@ -80,35 +81,41 @@ ul {
 
     <script>
       const download = document.getElementById("download");
-      const audio = document.getElementById("audio");
-      const time = document.getElementById("time");
-      const source = document.getElementById("audioSource");
+            const audio = document.getElementById("audio");
+            const time = document.getElementById("time");
+            const playing = document.getElementById("playing");
+            const source = document.getElementById("audioSource");
 
-      const data = localStorage.getItem('playStatus');
-      const playStatus = data !== null ? JSON.parse(data) : { };
+            const data = localStorage.getItem('playStatus');
+            const playStatus = data !== null ? JSON.parse(data) : { };
 
-      const setTime = () => {
-            if(playStatus[source.getAttribute('src')]) {
-                const minutes = playStatus[source.getAttribute('src')];
-                audio.currentTime = minutes;
-                }
-            }
+            const setTime = () => {
+                    if(playStatus[source.getAttribute('src')]) {
+                            const minutes = playStatus[source.getAttribute('src')];
+                            audio.currentTime = minutes;
+                          }
+                  }
             setTime(); 
 
-            setInterval(() => {
+            const getData = () => {
                     fetch("/count")
                       .then(res => res.json())
                       .then(res => download.innerText = res.count);
 
-                     const minute = Math.floor(audio.currentTime / 60);
-                     const second = Math.round(audio.currentTime % 60);
+                    const minute = Math.floor(audio.currentTime / 60);
+                    const second = Math.round(audio.currentTime % 60);
 
-                     const addZero = val => val < 10 ? `0${val}` : val;
-                     time.innerText = `${addZero(minute)}:${addZero(second)}`;
+                    const addZero = val => val < 10 ? `0${val}` : val;
+                    time.innerText = `${addZero(minute)}:${addZero(second)}`;
 
-                     playStatus[source.getAttribute('src')] = audio.currentTime;
-                     localStorage.setItem('playStatus', JSON.stringify(playStatus));
-                  }, 1000);
+                    playing.innerText = document.getElementById(source.getAttribute('src')).innerText.replaceAll("\"", "").slice(0, -1);;
+                    playStatus[source.getAttribute('src')] = audio.currentTime;
+                    localStorage.setItem('playStatus', JSON.stringify(playStatus));
+                  };
+
+            getData();
+
+            setInterval(getData, 1000);
 
             const control = document.getElementById("control");
             list.onclick = (e) => {
