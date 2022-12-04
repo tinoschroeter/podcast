@@ -4,9 +4,9 @@
 
 ## ToDo
 
-* [ ] make all buttons work
-* [ ] update design
-* [ ] progress for upload files
+* [x] make all buttons work
+* [x] update design
+* [x] progress for upload files
 * [ ] import password as secret
 
 ![podcast](podcast.png)
