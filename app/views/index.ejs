@@ -68,11 +68,11 @@ ul {
       <span class="keyword">const</span> playing<span class="punctuation"> = "</span><span id="playing"></span><span class="punctuation">"</span><span class="keyword">;</span></br></br>
       <span class="keyword">const</span> files<span class="punctuation"> = [</span>
       <ul style="list-style: none" id="list">
-        <% result.reverse().map((item) => { %>
-        <li><a class="string" href="#" id="<%= item.file + ".mp3" %>" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">",</span></a></li>
+        <% result.reverse().map((item, i, a) => { %>
+        <li><a class="string" href="#" id="<%= item.file + ".mp3" %>" data-value="<%= item.file + ".mp3" %>">    <span class="punctuation">"</span><%= item.title %><span class="punctuation">"<%= (i === a.length - 1) ? "" : "," %></span></a></li>
         <% }) %>
       </ul>
-      <span class="punctuation">&nbsp;&nbsp;];</span></br></br>
+      <span class="punctuation">&nbsp;&nbsp;]</span><span class="keyword">;</span></br></br>
       <span class="keyword">const</span> help<span class="punctuation"> = "</span><span class="string">curl https://podcast.tino.sh/upload<span<span class="punctuation">"<span class="keyword">;</span></span></br>
           <span class="keyword">const</span> gitHub<span class="punctuation"> = "</span><a class="string" href="https://github.com/tinoschroeter/podcast">https://github.com/tinoschroeter/podcast</a><span class="punctuation">"<span class="keyword">;</span></span></br>
           <span class="keyword">const</span> downloading<span class="punctuation"> = </span><span class="string" id="download">0</span><span class="keyword">;</span></br>
@@ -80,14 +80,17 @@ ul {
     </main>
 
     <script>
-      const download = document.getElementById("download");
+            const download = document.getElementById("download");
             const audio = document.getElementById("audio");
             const time = document.getElementById("time");
             const playing = document.getElementById("playing");
             const source = document.getElementById("audioSource");
 
+            const reload = { download: false, update: false };
+
             const data = localStorage.getItem('playStatus');
             const playStatus = data !== null ? JSON.parse(data) : { };
+
 
             const setTime = () => {
                     if(playStatus[source.getAttribute('src')]) {
@@ -100,7 +103,11 @@ ul {
             const getData = () => {
                     fetch("/count")
                       .then(res => res.json())
-                      .then(res => download.innerText = res.count);
+                      .then(res => {
+                              if(res.count > 0 ) reload.download = true;
+                              if(res.count === 0) reload.update = true;
+                              download.innerText = res.count
+                            });
 
                     const minute = Math.floor(audio.currentTime / 60);
                     const second = Math.round(audio.currentTime % 60);
@@ -111,6 +118,12 @@ ul {
                     playing.innerText = document.getElementById(source.getAttribute('src')).innerText.replaceAll("\"", "").slice(0, -1);;
                     playStatus[source.getAttribute('src')] = audio.currentTime;
                     localStorage.setItem('playStatus', JSON.stringify(playStatus));
+                    
+                    if(reload.download && reload.update) {
+                      reload.download = false;
+                      reload.update = false;
+                      location.reload(); 
+                    };
                   };
 
             getData();
