@@ -8,6 +8,7 @@
 * [x] update design
 * [x] progress for upload files
 * [ ] import password as secret
+* [ ] refactor app
 
 ![podcast](podcast.png)
 
